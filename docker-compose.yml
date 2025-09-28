@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # Backend (FastAPI)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile   # Pastikan menunjuk ke Dockerfile untuk backend
+    container_name: kipk_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=kipk_db
+    depends_on:
+      - db
+
+  # Database (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: kipk_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: kipk_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - kipk_db_data:/var/lib/mysql
+
+  # Frontend (Web UI with nginx)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend   # Dockerfile untuk frontend
+    container_name: kipk_frontend
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+
+# Volume untuk penyimpanan data MySQL
+volumes:
+  kipk_db_data:

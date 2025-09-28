@@ -1,0 +1,10 @@
+# Menggunakan image nginx untuk menyajikan file frontend statis
+FROM nginx:alpine
+
+# Salin file frontend (HTML, CSS, JS) ke dalam container nginx
+COPY frontend /usr/share/nginx/html
+
+# Menetapkan port untuk akses frontend
+EXPOSE 80
+
+# Nginx akan otomatis menjalankan server ketika container dimulai
