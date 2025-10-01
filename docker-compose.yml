@@ -5,7 +5,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile   # Pastikan menunjuk ke Dockerfile untuk backend
+      dockerfile: Dockerfile   # Menunjuk ke Dockerfile untuk backend
     container_name: kipk_backend
     ports:
       - "8000:8000"
@@ -38,9 +38,18 @@ services:
       dockerfile: Dockerfile.frontend   # Dockerfile untuk frontend
     container_name: kipk_frontend
     ports:
-      - "80:80"
+      - "8080:80"   # Akses frontend di http://localhost:8080
     volumes:
-      - ./frontend:/usr/share/nginx/html
+      - ./frontend:/usr/share/nginx/html  # Menyajikan file frontend dari folder frontend
+
+  # Adminer (untuk mengelola MySQL)
+  adminer:
+    image: adminer
+    container_name: kipk_adminer
+    ports:
+      - "8081:8080"   # Akses Adminer di http://localhost:8081
+    depends_on:
+      - db
 
 # Volume untuk penyimpanan data MySQL
 volumes:
