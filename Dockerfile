@@ -8,11 +8,11 @@ WORKDIR /app
 COPY backend/requirements.txt /app/
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Salin seluruh file aplikasi backend ke dalam container
+# Salin semua file aplikasi ke dalam container
 COPY backend /app
 
 # Tentukan port yang digunakan
 EXPOSE 8000
 
 # Perintah untuk menjalankan aplikasi FastAPI
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
